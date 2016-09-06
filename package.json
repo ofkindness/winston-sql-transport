@@ -1,0 +1,32 @@
+{
+  "name": "winston-pg-transport",
+  "version": "1.0.0",
+  "description": "A Winston transport for PostgreSQL.",
+  "main": "lib/winston-pg-transport.js",
+  "scripts": {
+    "test": "vows --spec test/*-test.js"
+  },
+  "dependencies": {
+    "JSONStream": "^1.1.2",
+    "circular-json": "^0.3.0",
+    "moment": "^2.14.1",
+    "pg": "^6.0.0",
+    "pg-promise": "^4.7.8",
+    "pg-query-stream": "^1.0.0",
+    "sql": "^0.70.0"
+  },
+  "devDependencies": {
+    "vows": "^0.8.1",
+    "winston": "^2.2.0"
+  },
+  "keywords": [
+    "winston",
+    "logging",
+    "transport",
+    "pg",
+    "postgres",
+    "postgresql"
+  ],
+  "author": "Andrei Tretyakov <andrei.tretyakov@gmail.com>",
+  "license": "MIT"
+}
