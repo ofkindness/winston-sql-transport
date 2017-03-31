@@ -1,23 +1,19 @@
 {
-  "name": "winston-pg-transport",
+  "name": "winston-sql-transport",
   "version": "1.0.0",
-  "description": "A Winston transport for PostgreSQL.",
-  "main": "lib/winston-pg-transport.js",
+  "description": "Winston universal SQL transport",
+  "main": "lib/winston-sql-transport.js",
   "scripts": {
     "test": "vows --spec test/*-test.js"
   },
   "dependencies": {
-    "JSONStream": "^1.1.2",
-    "circular-json": "^0.3.0",
-    "moment": "^2.14.1",
-    "pg": "^6.0.0",
-    "pg-promise": "^4.7.8",
-    "pg-query-stream": "^1.0.0",
-    "sql": "^0.70.0"
+    "circular-json": "^0.3.1",
+    "knex": "^0.12.9",
+    "moment": "^2.18.1"
   },
   "devDependencies": {
     "vows": "^0.8.1",
-    "winston": "^2.2.0"
+    "winston": "^2.3.1"
   },
   "keywords": [
     "winston",
