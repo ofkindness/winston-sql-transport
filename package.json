@@ -21,12 +21,14 @@
     "eslint-plugin-react": "^7.3.0"
   },
   "keywords": [
-    "winston",
     "logging",
+    "winston",
     "transport",
-    "pg",
-    "postgres",
-    "postgresql"
+    "sql",
+    "knex",
+    "postgresql",
+    "mysql",
+    "mssql"
   ],
   "author": "Andrei Tretyakov <andrei.tretyakov@gmail.com>",
   "license": "MIT"

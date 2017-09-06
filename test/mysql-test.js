@@ -1,4 +1,3 @@
-'use strict';
 /**
  * @module 'mysql-test'
  * @fileoverview Tests of winston transport for logging into MySQL
@@ -6,9 +5,9 @@
  * @author Andrei Tretyakov <andrei.tretyakov@gmail.com>
  */
 
-var vows = require('vows');
-var transport = require('winston/test/transports/transport');
-var Universal = require('../lib/winston-sql-transport.js');
+const vows = require('vows');
+const transport = require('winston/test/transports/transport');
+const Universal = require('../lib/winston-sql-transport.js');
 
 vows.describe('mysql-transport')
   .addBatch({
