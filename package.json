@@ -7,13 +7,18 @@
     "test": "vows --spec test/*-test.js"
   },
   "dependencies": {
-    "circular-json": "^0.3.1",
-    "knex": "^0.12.9",
-    "moment": "^2.18.1"
-  },
-  "devDependencies": {
+    "circular-json": "^0.3.3",
+    "knex": "^0.13.0",
+    "moment": "^2.18.1",
     "vows": "^0.8.1",
     "winston": "^2.3.1"
+  },
+  "devDependencies": {
+    "eslint": "^4.5.0",
+    "eslint-config-airbnb": "^15.1.0",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-jsx-a11y": "^5.1.1",
+    "eslint-plugin-react": "^7.3.0"
   },
   "keywords": [
     "winston",
