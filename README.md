@@ -4,6 +4,7 @@ Universal [winston](https://www.npmjs.com/package/winston) SQL transport.
 
 Supports:
 - MySQL
+- OracleDB
 - PostgreSQL
 - SQL server
 

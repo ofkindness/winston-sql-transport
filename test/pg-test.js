@@ -7,11 +7,11 @@
 
 const vows = require('vows');
 const transport = require('winston/test/transports/transport');
-const Universal = require('../lib/winston-sql-transport.js');
+const SQLTransport = require('../lib/winston-sql-transport.js');
 
 vows.describe('pg-transport')
   .addBatch({
-    'An instance of the Postgres Transport': transport(Universal, {
+    'An instance of the Postgres Transport': transport(SQLTransport, {
       client: 'pg',
       connectionString: `postgres://${process.env.PGUSER}\
 :${process.env.PGPASSWORD}\
