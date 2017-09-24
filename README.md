@@ -33,9 +33,9 @@ const options = {
 const winston = require('winston');
 const SQLTransport = require('winston-sql-transport');
 
-const logger = new (winston.Logger)({
+const logger = new winston.Logger({
   transports: [
-    new (SQLTransport)({
+    new SQLTransport({
       tableName: 'winston_logs',
     })]
 });
