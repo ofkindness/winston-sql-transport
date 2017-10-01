@@ -4,11 +4,29 @@ jobs:
     docker:
       - image: circleci/node:6
         environment:
+          MSSQL_USER: sa
+          MSSQL_PASSWORD: mySecretPassword1
+          MSSQL_HOST: localhost
+          MSSQL_DB: winston
+          MYSQL_DATABASE: winston
+          MYSQL_USER: winston
+          MYSQL_PASSWORD: mysecretpassword
+          MYSQL_ROOT_PASSWORD: mysecretpassword
           PGHOST: 127.0.0.1
           PGPORT: 5432
           PGUSER: winston
           PGPASSWORD: mysecretpassword
           PGDATABASE: winston
+      - image: mysql:latest
+        environment:
+          MYSQL_DATABASE: winston
+          MYSQL_USER: winston
+          MYSQL_PASSWORD: mysecretpassword
+          MYSQL_ROOT_PASSWORD: mysecretpassword
+      - image: mssql-server-linux:latest
+        environment:
+          ACCEPT_EULA: Y
+          SA_PASSWORD: mySecretPassword1
       - image: postgres:9.6-alpine
         environment:
           POSTGRES_USER: winston
