@@ -1,27 +1,34 @@
 {
   "name": "winston-sql-transport",
   "version": "1.0.0",
-  "description": "Winston universal SQL transport",
+  "description": "Universal winston SQL transport based on Knex.js",
   "main": "lib/winston-sql-transport.js",
   "scripts": {
     "test": "vows --spec test/*-test.js"
   },
   "dependencies": {
-    "circular-json": "^0.3.1",
-    "knex": "^0.12.9",
-    "moment": "^2.18.1"
+    "circular-json": "^0.4.0",
+    "knex": "^0.14.2",
+    "moment": "^2.19.3",
+    "winston": "^2.4.0"
   },
   "devDependencies": {
-    "vows": "^0.8.1",
-    "winston": "^2.3.1"
+    "eslint": "^4.13.0",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-jsx-a11y": "^6.0.2",
+    "eslint-plugin-react": "^7.5.1",
+    "vows": "^0.8.1"
   },
   "keywords": [
-    "winston",
     "logging",
+    "winston",
     "transport",
-    "pg",
-    "postgres",
-    "postgresql"
+    "sql",
+    "knex",
+    "postgresql",
+    "mysql",
+    "mssql"
   ],
   "author": "Andrei Tretyakov <andrei.tretyakov@gmail.com>",
   "license": "MIT"
