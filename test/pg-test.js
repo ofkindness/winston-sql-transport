@@ -5,12 +5,13 @@
  * @author Andrei Tretyakov <andrei.tretyakov@gmail.com>
  */
 
+const assert = require('assert');
+const { Logger } = require('winston');
 const { SQLTransport } = require('./../lib/winston-sql-transport');
 const transport = require('./transport.js');
 const vows = require('vows');
-const winston = require('winston');
 
-const logger = new winston.Logger({
+const logger = new Logger({
   transports: [
     new SQLTransport({
       client: 'pg',
@@ -31,6 +32,18 @@ const logger = new winston.Logger({
 
 vows
   .describe('winston-sql-transport')
+  .addBatch({
+    'An instance of the SQL Transport - PostgreSQL': {
+      topic: function topic() {
+        const { callback } = this;
+        logger.transports.SQLTransport.init().then(() => callback(null, true));
+      },
+      'should create table': (err, result) => {
+        assert.isNull(err);
+        assert.ok(result === true);
+      }
+    }
+  })
   .addBatch({
     'An instance of the SQL Transport - PostgreSQL': transport(logger, logger.transports.SQLTransport)
   })
