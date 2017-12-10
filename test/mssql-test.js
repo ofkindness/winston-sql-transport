@@ -1,11 +1,18 @@
-const SQLServer = require('./../lib/winston-sql-transport');
+/**
+ * @module 'mssql-test'
+ * @fileoverview Tests of winston transport for logging into SQLServer
+ * @license MIT
+ * @author Andrei Tretyakov <andrei.tretyakov@gmail.com>
+ */
+
+const { SQLTransport } = require('./../lib/winston-sql-transport');
 const transport = require('./transport.js');
 const vows = require('vows');
-const winston = require('winston');
+const { Logger } = require('winston');
 
-const logger = new winston.Logger({
+const logger = new Logger({
   transports: [
-    new SQLServer({
+    new SQLTransport({
       client: 'mssql',
       connection: {
         user: process.env.MSSQL_USER,
@@ -13,7 +20,7 @@ const logger = new winston.Logger({
         server: process.env.MSSQL_HOST,
         database: process.env.MSSQL_DB
       },
-      name: 'SQLServer',
+      name: 'SQLTransport',
       pool: {
         min: 0,
         max: 10
@@ -26,6 +33,6 @@ const logger = new winston.Logger({
 vows
   .describe('winston-sql-transport')
   .addBatch({
-    'An instance of the SQL Transport - SQL server': transport(logger, logger.transports.SQL)
+    'An instance of the SQL Transport - SQL server': transport(logger, logger.transports.SQLTransport)
   })
   .export(module);

@@ -5,14 +5,14 @@
  * @author Andrei Tretyakov <andrei.tretyakov@gmail.com>
  */
 
-const MySQL = require('./../lib/winston-sql-transport');
+const { SQLTransport } = require('./../lib/winston-sql-transport');
 const transport = require('./transport.js');
 const vows = require('vows');
 const winston = require('winston');
 
 const logger = new winston.Logger({
   transports: [
-    new MySQL({
+    new SQLTransport({
       client: 'mysql',
       connection: {
         host: process.env.MYSQL_HOST,
@@ -34,7 +34,7 @@ const logger = new winston.Logger({
 vows
   .describe('winston-sql-transport')
   .addBatch({
-    'An instance of the SQL Transport - MySQL': transport(logger, logger.transports.SQL)
+    'An instance of the SQL Transport - MySQL': transport(logger, logger.transports.SQLTransport)
   })
   .export(module);
 
@@ -57,3 +57,7 @@ vows
 //     })
 //   })
 //   .export(module);
+
+// "mssql": "^3.3.0",
+// "mysql": "^2.14.1",
+// "pg": "^7.3.0",

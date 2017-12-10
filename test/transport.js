@@ -1,5 +1,9 @@
-/* eslint no-param-reassign: 0 */
-/* eslint no-plusplus: 0 */
+/**
+ * @module 'transport'
+ * @fileoverview Winston universal SQL transport test suite
+ * @license MIT
+ * @author Andrei Tretyakov <andrei.tretyakov@gmail.com>
+ */
 const assert = require('assert');
 const helpers = require('./../node_modules/winston/test/helpers');
 
@@ -10,7 +14,8 @@ module.exports = (logger, transport) => ({
       assert.isFunction(transport.log);
     }
   },
-  'the log() method': helpers.testNpmLevels(transport,
+  'the log() method': helpers.testNpmLevels(
+    transport,
     'should respond with true', (ign, err, logged) => {
       assert.isNull(err);
       assert.isNotNull(logged);
@@ -32,15 +37,18 @@ module.exports = (logger, transport) => ({
         stream.on('log', (log) => {
           results.push(log);
           results.stream = stream;
-          if (!--j) cb(null, results);
+          j -= 1;
+          if (j === 0) {
+            cb(null, results);
+          }
         });
 
         stream.on('error', (err) => {
           j = -1; // don't call the callback again
           cb(err);
         });
-
-        while (i--) {
+        while (i) {
+          i -= 1;
           logger.log('info', `hello world ${i}`, {});
         }
       },
@@ -62,7 +70,7 @@ module.exports = (logger, transport) => ({
         const stream = logger.stream({ start: 0 });
 
         stream.on('log', (log) => {
-          log.stream = stream;
+          Object.assign(log, { stream });
           if (cb) cb(null, log);
           cb = null;
         });
@@ -84,18 +92,13 @@ module.exports = (logger, transport) => ({
         topic: function topic() {
           if (!transport.query) return;
           const cb = this.callback;
-          logger.log('info', 'hello world', {}, () => {
-            logger.query(cb);
-          });
+          logger.log('info', 'hello world', {}, () => logger.query(cb));
         },
         'should return matching results': (err, results) => {
           if (!transport.query) return;
           assert.isNull(err);
-          results = results[transport.name];
-          while (!Array.isArray(results)) {
-            results = results[Object.keys(results).pop()];
-          }
-          const log = results.pop();
+          const [...logs] = results.SQLTransport;
+          const log = logs.pop();
           assert.ok(log.message.indexOf('hello world') === 0 ||
             log.message.indexOf('test message') === 0);
         }
@@ -111,11 +114,8 @@ module.exports = (logger, transport) => ({
         'should return one result': (err, results) => {
           if (!transport.query) return;
           assert.isNull(err);
-          results = results[transport.name];
-          while (!Array.isArray(results)) {
-            results = results[Object.keys(results).pop()];
-          }
-          assert.equal(results.length, 1);
+          const [...logs] = results.SQLTransport;
+          assert.equal(logs.length, 1);
         }
       },
       'using `fields` and `order` option': {
@@ -129,13 +129,10 @@ module.exports = (logger, transport) => ({
         'should return matching results': (err, results) => {
           if (!transport.query) return;
           assert.isNull(err);
-          results = results[transport.name];
-          while (!Array.isArray(results)) {
-            results = results[Object.keys(results).pop()];
-          }
-          assert.equal(Object.keys(results[0]).length, 1);
-          assert.ok(new Date(results.shift().timestamp) <
-            new Date(results.pop().timestamp));
+          const [...logs] = results.SQLTransport;
+          assert.equal(Object.keys(logs[0]).length, 1);
+          assert.ok(new Date(logs.shift().timestamp) <
+            new Date(logs.pop().timestamp));
         }
       },
       'using the `from` and `until` option': {
@@ -149,11 +146,8 @@ module.exports = (logger, transport) => ({
         'should return matching results': (err, results) => {
           if (!transport.query) return;
           assert.isNull(err);
-          results = results[transport.name];
-          while (!Array.isArray(results)) {
-            results = results[Object.keys(results).pop()];
-          }
-          assert.ok(results.length >= 1);
+          const [...logs] = results.SQLTransport;
+          assert.ok(logs.length >= 1);
         }
       },
       'using a bad `from` and `until` option': {
@@ -168,12 +162,8 @@ module.exports = (logger, transport) => ({
         'should return no results': (err, results) => {
           if (!transport.query) return;
           assert.isNull(err);
-          results = results[transport.name];
-          while (!Array.isArray(results)) {
-            results = results[Object.keys(results).pop()];
-          }
-          results = [results.filter(log => log.message === 'bad from and until').pop()];
-          assert.isUndefined(results[0]);
+          const [...logs] = results.SQLTransport;
+          assert.isUndefined([logs.filter(log => log.message === 'bad from and until').pop()][0]);
         }
       }
     }

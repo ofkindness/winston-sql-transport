@@ -4,7 +4,6 @@ Universal [winston](https://www.npmjs.com/package/winston) SQL transport.
 
 Supports:
 - MySQL
-- OracleDB
 - PostgreSQL
 - SQL server
 
@@ -30,10 +29,10 @@ const options = {
 ## Usage
 
 ```js
-const winston = require('winston');
-const SQLTransport = require('winston-sql-transport');
+const { Logger } = require('winston');
+const { SQLTransport } = require('./../lib/winston-sql-transport');
 
-const logger = new winston.Logger({
+const logger = new Logger({
   transports: [
     new SQLTransport({
       tableName: 'winston_logs',
