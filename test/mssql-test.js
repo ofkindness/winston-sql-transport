@@ -10,6 +10,9 @@ const { Logger } = require('winston');
 const { SQLTransport } = require('./../lib/winston-sql-transport');
 const transport = require('./transport.js');
 const vows = require('vows');
+const dotenv = require('dotenv');
+
+dotenv.config();
 
 const logger = new Logger({
   transports: [
@@ -26,7 +29,8 @@ const logger = new Logger({
         min: 0,
         max: 10
       },
-      tableName: 'winston_logs'
+      tableName: 'winston_logs',
+      keepLocalTime: true
     })
   ]
 });

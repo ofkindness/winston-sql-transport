@@ -13,7 +13,7 @@ jobs:
           MYSQL_PASSWORD: mysecretpassword
           MYSQL_ROOT_PASSWORD: mysecretpassword
           PGHOST: 127.0.0.1
-          PGPORT: 5432
+          PGPORT: "5432"
           PGUSER: winston
           PGPASSWORD: mysecretpassword
           PGDATABASE: winston
@@ -25,7 +25,7 @@ jobs:
           MYSQL_ROOT_PASSWORD: mysecretpassword
       - image: microsoft/mssql-server-linux:latest
         environment:
-          ACCEPT_EULA: Y
+          ACCEPT_EULA: "Y"
           SA_PASSWORD: mySecretPassword1
       - image: postgres:9.6-alpine
         environment:
