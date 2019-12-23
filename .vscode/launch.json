@@ -13,7 +13,7 @@
                 "--spec",
                 "${workspaceFolder}\\test\\mssql-test.js", // Change to *-test.js to launch all tests.
             ],
-            "stopOnEntry": true,
+            //"stopOnEntry": true,
             "console": "integratedTerminal",
             "internalConsoleOptions": "neverOpen",
             "skipFiles": [
