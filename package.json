@@ -4,12 +4,16 @@
   "description": "Universal winston SQL transport based on Knex.js",
   "main": "lib/winston-sql-transport.js",
   "scripts": {
-    "test": "vows --spec test/*-test.js"
+    "test": "vows --spec test/mssql-test.js"
   },
   "dependencies": {
     "circular-json": "^0.4.0",
+    "dotenv": "^8.2.0",
     "knex": "^0.14.2",
     "moment": "^2.19.3",
+    "mssql": "^6.0.1",
+    "mysql": "^2.17.1",
+    "pg": "^7.15.1",
     "winston": "^2.4.0"
   },
   "devDependencies": {
