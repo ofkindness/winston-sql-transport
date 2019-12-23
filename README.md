@@ -30,6 +30,7 @@ See the default values used:
 ```js
 const options = {
   tableName: 'winston_logs',
+  keepLocalTime: true // When True stores timestamp column as the server's local time, when False stores UTC.
 };
 ```
 
@@ -43,6 +44,7 @@ const logger = new Logger({
   transports: [
     new SQLTransport({
       tableName: 'winston_logs',
+      keepLocalTime: true
     })]
 });
 
