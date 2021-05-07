@@ -9,6 +9,8 @@ const testSuite = require('abstract-winston-transport');
 
 const { SQLTransport } = require('../lib/winston-sql-transport');
 
+const name = 'MySQL';
+
 const construct = {
   client: 'mysql',
   connection: {
@@ -18,7 +20,7 @@ const construct = {
     password: process.env.MYSQL_PASSWORD,
     database: process.env.MYSQL_DATABASE
   },
-  name: 'MySQL',
+  name,
   pool: {
     min: 0,
     max: 10
@@ -28,9 +30,12 @@ const construct = {
 
 const mysqlTransport = new SQLTransport(construct);
 
-mysqlTransport.init()
-  .then(() => testSuite({
-    name: 'MySQL',
+describe(name, () => {
+  before(() => mysqlTransport.init());
+
+  testSuite({
+    name,
     Transport: SQLTransport,
     construct
-  }));
+  });
+});

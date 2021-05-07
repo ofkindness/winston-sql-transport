@@ -9,6 +9,8 @@ const testSuite = require('abstract-winston-transport');
 
 const { SQLTransport } = require('../lib/winston-sql-transport');
 
+const name = 'Postgres';
+
 const construct = {
   client: 'pg',
   connection: `postgres://${process.env.PGUSER}\
@@ -16,7 +18,7 @@ const construct = {
 @${process.env.PGHOST}\
 :${process.env.PGPORT}\
 /${process.env.PGDATABASE}`,
-  name: 'Postgres',
+  name,
   pool: {
     min: 0,
     max: 10
@@ -26,9 +28,12 @@ const construct = {
 
 const pgTransport = new SQLTransport(construct);
 
-pgTransport.init()
-  .then(() => testSuite({
+describe(name, () => {
+  before(() => pgTransport.init());
+
+  testSuite({
     name: 'Postgres',
     Transport: SQLTransport,
     construct
-  }));
+  });
+});
