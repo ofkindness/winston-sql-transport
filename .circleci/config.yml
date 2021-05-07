@@ -11,6 +11,7 @@ jobs:
           MYSQL_DATABASE: winston
           MYSQL_USER: winston
           MYSQL_PASSWORD: mysecretpassword
+          MYSQL_ROOT_HOST: 127.0.0.1
           MYSQL_ROOT_PASSWORD: mysecretpassword
           PGHOST: 127.0.0.1
           PGPORT: 5432
