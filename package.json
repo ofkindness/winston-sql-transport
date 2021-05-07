@@ -4,21 +4,26 @@
   "description": "Universal winston SQL transport based on Knex.js",
   "main": "lib/winston-sql-transport.js",
   "scripts": {
-    "test": "vows --spec test/*-test.js"
+    "test": "mocha --exit --spec test/*-test.js"
   },
   "dependencies": {
-    "circular-json": "^0.4.0",
-    "knex": "^0.14.2",
-    "moment": "^2.19.3",
-    "winston": "^2.4.0"
+    "flatted": "^3.1.1",
+    "knex": "^0.95.4",
+    "moment": "^2.29.1",
+    "winston": "^3.3.3"
   },
   "devDependencies": {
-    "eslint": "^4.13.0",
-    "eslint-config-airbnb": "^16.1.0",
-    "eslint-plugin-import": "^2.8.0",
-    "eslint-plugin-jsx-a11y": "^6.0.2",
-    "eslint-plugin-react": "^7.5.1",
-    "vows": "^0.8.1"
+    "abstract-winston-transport": "^0.5.1",
+    "eslint": "^7.25.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-react": "^7.23.2",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "mocha": "^8.4.0",
+    "mssql": "^7.0.0",
+    "mysql": "^2.18.1",
+    "pg": "^8.6.0"
   },
   "keywords": [
     "logging",
