@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/node:6
+      - image: circleci/node:14
         environment:
           MSSQL_USER: sa
           MSSQL_PASSWORD: mySecretPassword1
@@ -27,7 +27,7 @@ jobs:
         environment:
           ACCEPT_EULA: Y
           SA_PASSWORD: mySecretPassword1
-      - image: postgres:9.6-alpine
+      - image: postgres:latest
         environment:
           POSTGRES_USER: winston
           POSTGRES_DB: winston
@@ -45,7 +45,6 @@ jobs:
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
 
-      - run: npm i mssql mysql pg
       - run: npm install
 
       - save_cache:
