@@ -10,7 +10,7 @@
     "flatted": "^3.1.1",
     "knex": "^0.95.4",
     "moment": "^2.29.1",
-    "winston": "^3.3.3"
+    "winston-transport": "^4.4.0"
   },
   "devDependencies": {
     "abstract-winston-transport": "^0.5.1",
@@ -22,18 +22,18 @@
     "eslint-plugin-react-hooks": "^4.2.0",
     "mocha": "^8.4.0",
     "mssql": "^7.0.0",
-    "mysql": "^2.18.1",
+    "mysql2": "^2.2.5",
     "pg": "^8.6.0"
   },
   "keywords": [
-    "logging",
-    "winston",
-    "transport",
-    "sql",
     "knex",
+    "logging",
+    "mssql",
+    "mysql2",
     "postgresql",
-    "mysql",
-    "mssql"
+    "sql",
+    "winston-transport",
+    "winston"
   ],
   "author": "Andrei Tretyakov <andrei.tretyakov@gmail.com>",
   "license": "MIT"

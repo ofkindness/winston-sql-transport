@@ -17,7 +17,7 @@ jobs:
           PGUSER: winston
           PGPASSWORD: mysecretpassword
           PGDATABASE: winston
-      - image: mysql:latest
+      - image: mysql/mysql-server:latest
         environment:
           MYSQL_DATABASE: winston
           MYSQL_USER: winston
@@ -41,9 +41,9 @@ jobs:
       # Download and cache dependencies
       - restore_cache:
           keys:
-          - v1-dependencies-{{ checksum "package.json" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
+            - v1-dependencies-{{ checksum "package.json" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
 
       - run: npm install
 
