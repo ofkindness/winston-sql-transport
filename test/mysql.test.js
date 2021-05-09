@@ -34,8 +34,8 @@ describe(name, () => {
   before(() => mysqlTransport.init());
 
   testSuite({
+    construct,
     name,
     Transport: SQLTransport,
-    construct,
   });
 });

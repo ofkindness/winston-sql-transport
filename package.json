@@ -4,7 +4,7 @@
   "description": "Universal winston SQL transport based on Knex.js",
   "main": "lib/winston-sql-transport.js",
   "scripts": {
-    "test": "mocha --exit --spec test/*-test.js"
+    "test": "mocha --exit --spec test/*.test.js"
   },
   "dependencies": {
     "flatted": "^3.1.1",
