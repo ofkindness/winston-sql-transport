@@ -5,8 +5,9 @@
  * @author Andrei Tretyakov <andrei.tretyakov@gmail.com>
  */
 
-const testSuite = require('abstract-winston-transport');
+const logSuite = require('abstract-winston-transport');
 
+const querySuit = require('./query.suit');
 const { SQLTransport } = require('../lib/winston-sql-transport');
 
 const name = 'Postgres';
@@ -21,9 +22,9 @@ const construct = {
   name,
   pool: {
     min: 0,
-    max: 10
+    max: 10,
   },
-  tableName: 'winston_logs'
+  tableName: 'winston_logs',
 };
 
 const pgTransport = new SQLTransport(construct);
@@ -31,9 +32,13 @@ const pgTransport = new SQLTransport(construct);
 describe(name, () => {
   before(() => pgTransport.init());
 
-  testSuite({
+  logSuite({
     name: 'Postgres',
     Transport: SQLTransport,
-    construct
+    construct,
+  });
+
+  querySuit({
+    transport: mysqlTransport,
   });
 });

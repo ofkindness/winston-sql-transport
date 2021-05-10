@@ -8,11 +8,12 @@
 Universal [winston](https://www.npmjs.com/package/winston) SQL transport.
 
 Supports:
+
 - MySQL
 - PostgreSQL
 - SQL Server
 
-via [knex](http://knexjs.org/) library.
+via [knex](https://knexjs.org/) library.
 
 ## Installation
 
@@ -21,7 +22,7 @@ via [knex](http://knexjs.org/) library.
   $ npm install winston-sql-transport
 ```
 
-and then install the appropriate database library: [pg](https://github.com/brianc/node-postgres) for PostgreSQL, [mysql](https://github.com/felixge/node-mysql) for MySQL or MariaDB or [mssql](https://github.com/patriksimek/node-mssql) for MSSQL.
+and then install the appropriate database library: [pg](https://github.com/brianc/node-postgres) for PostgreSQL, [mysql2](https://github.com/sidorares/node-mysql2) for MySQL or MariaDB or [mssql](https://github.com/patriksimek/node-mssql) for MSSQL.
 
 ## Options
 
@@ -43,7 +44,8 @@ const logger = new Logger({
   transports: [
     new SQLTransport({
       tableName: 'winston_logs',
-    })]
+    }),
+  ],
 });
 
 module.exports = logger;
@@ -62,11 +64,11 @@ This transport supports querying of logs with Loggly-like options. [See Loggly S
 ```js
 const options = {
   fields: ['message'],
-  from: new Date - 24 * 60 * 60 * 1000,
-  until: new Date,
+  from: new Date() - 24 * 60 * 60 * 1000,
+  until: new Date(),
   start: 0,
   limit: 10,
-  order: 'desc'
+  order: 'desc',
 };
 
 //
@@ -96,7 +98,7 @@ logger.stream({ start: -1 }).on('log', (log) => {
 
 ## Run Tests
 
-The tests are written in [vows](http://vowsjs.org), and designed to be run with npm.
+The tests are written in [mocha](https://mochajs.org/), and designed to be run with npm.
 
 ```bash
   $ npm test
