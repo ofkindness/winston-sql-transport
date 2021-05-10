@@ -5,8 +5,9 @@
  * @author Andrei Tretyakov <andrei.tretyakov@gmail.com>
  */
 
-const testSuite = require('abstract-winston-transport');
+const logSuite = require('abstract-winston-transport');
 
+const querySuit = require('./query.suite');
 const { SQLTransport } = require('../lib/winston-sql-transport');
 
 const name = 'MySQL';
@@ -33,9 +34,13 @@ const mysqlTransport = new SQLTransport(construct);
 describe(name, () => {
   before(() => mysqlTransport.init());
 
-  testSuite({
+  logSuite({
+    construct,
     name,
     Transport: SQLTransport,
-    construct,
+  });
+
+  querySuit({
+    transport: mysqlTransport,
   });
 });
