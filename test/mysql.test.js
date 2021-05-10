@@ -7,7 +7,7 @@
 
 const logSuite = require('abstract-winston-transport');
 
-const querySuit = require('./query.suit');
+const querySuit = require('./query.suite');
 const { SQLTransport } = require('../lib/winston-sql-transport');
 
 const name = 'MySQL';
