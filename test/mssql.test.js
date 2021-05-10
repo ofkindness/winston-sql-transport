@@ -40,6 +40,6 @@ describe(name, () => {
   });
 
   querySuit({
-    transport: mysqlTransport,
+    transport: mssqlTransport,
   });
 });

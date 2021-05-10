@@ -39,6 +39,6 @@ describe(name, () => {
   });
 
   querySuit({
-    transport: mysqlTransport,
+    transport: pgTransport,
   });
 });
