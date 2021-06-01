@@ -2,36 +2,38 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/node:6
+      - image: circleci/node:14
         environment:
-          MSSQL_USER: sa
-          MSSQL_PASSWORD: mySecretPassword1
-          MSSQL_HOST: localhost
           MSSQL_DB: master
+          MSSQL_HOST: localhost
+          MSSQL_PASSWORD: yourStrong(!)Password
+          MSSQL_USER: sa
           MYSQL_DATABASE: winston
-          MYSQL_USER: winston
           MYSQL_PASSWORD: mysecretpassword
+          MYSQL_ROOT_HOST: 127.0.0.1
           MYSQL_ROOT_PASSWORD: mysecretpassword
+          MYSQL_USER: winston
+          PGDATABASE: winston
           PGHOST: 127.0.0.1
+          PGPASSWORD: mysecretpassword
           PGPORT: 5432
           PGUSER: winston
-          PGPASSWORD: mysecretpassword
-          PGDATABASE: winston
-      - image: mysql:latest
+      - image: mysql/mysql-server:latest
         environment:
           MYSQL_DATABASE: winston
-          MYSQL_USER: winston
           MYSQL_PASSWORD: mysecretpassword
+          MYSQL_ROOT_HOST: 127.0.0.1
           MYSQL_ROOT_PASSWORD: mysecretpassword
-      - image: microsoft/mssql-server-linux:latest
+          MYSQL_USER: winston
+      - image: mcr.microsoft.com/azure-sql-edge
         environment:
           ACCEPT_EULA: Y
-          SA_PASSWORD: mySecretPassword1
-      - image: postgres:9.6-alpine
+          SA_PASSWORD: yourStrong(!)Password
+      - image: postgres:latest
         environment:
-          POSTGRES_USER: winston
           POSTGRES_DB: winston
           POSTGRES_PASSWORD: mysecretpassword
+          POSTGRES_USER: winston
 
     working_directory: ~/winston-sql-transport
 
@@ -41,11 +43,10 @@ jobs:
       # Download and cache dependencies
       - restore_cache:
           keys:
-          - v1-dependencies-{{ checksum "package.json" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
+            - v1-dependencies-{{ checksum "package.json" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
 
-      - run: npm i mssql mysql pg
       - run: npm install
 
       - save_cache:
