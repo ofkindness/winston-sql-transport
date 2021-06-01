@@ -6,7 +6,7 @@ jobs:
         environment:
           MSSQL_DB: master
           MSSQL_HOST: localhost
-          MSSQL_PASSWORD: mySecretPassword1
+          MSSQL_PASSWORD: yourStrong(!)Password
           MSSQL_USER: sa
           MYSQL_DATABASE: winston
           MYSQL_PASSWORD: mysecretpassword
@@ -25,10 +25,10 @@ jobs:
           MYSQL_ROOT_HOST: 127.0.0.1
           MYSQL_ROOT_PASSWORD: mysecretpassword
           MYSQL_USER: winston
-      - image: microsoft/mssql-server-linux:latest
+      - image: mcr.microsoft.com/azure-sql-edge
         environment:
           ACCEPT_EULA: Y
-          SA_PASSWORD: mySecretPassword1
+          SA_PASSWORD: yourStrong(!)Password
       - image: postgres:latest
         environment:
           POSTGRES_DB: winston
