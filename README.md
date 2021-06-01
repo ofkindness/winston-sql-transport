@@ -37,10 +37,12 @@ const options = {
 ## Usage
 
 ```js
-const { Logger } = require('winston');
-const { SQLTransport } = require('./../lib/winston-sql-transport');
+const winston = require('winston');
+const SQLTransport = require('winston-sql-transport');
 
-const logger = new Logger({
+const logger = winston.createLogger({
+  level: 'info',
+  format: winston.format.json(),
   transports: [
     new SQLTransport({
       tableName: 'winston_logs',
@@ -54,7 +56,10 @@ module.exports = logger;
 ## Logging
 
 ```js
-logger.log('info', 'message', {});
+logger.log({
+  level: 'info',
+  message: 'Hello there.',
+});
 ```
 
 ## Querying Logs
