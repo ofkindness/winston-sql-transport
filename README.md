@@ -90,7 +90,7 @@ logger.query(options, (err, results) => {
 
 ## Run Tests
 
-The tests are written in [mocha](https://mochajs.org/), and designed to be run with npm.
+The tests are written in [jest](https://jestjs.io/), and designed to be run with npm.
 
 ```bash
   $ npm test
