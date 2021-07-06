@@ -1,6 +1,6 @@
 {
   "name": "winston-sql-transport",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Universal winston SQL transport based on Knex.js",
   "main": "lib/winston-sql-transport.js",
   "scripts": {
