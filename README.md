@@ -22,7 +22,7 @@ via [knex](https://knexjs.org/) library.
   $ npm install winston-sql-transport
 ```
 
-and then install the appropriate database library: [pg](https://github.com/brianc/node-postgres) for PostgreSQL, [mysql2](https://github.com/sidorares/node-mysql2) for MySQL or MariaDB or [mssql](https://github.com/patriksimek/node-mssql) for MSSQL.
+and then install the appropriate database library: [pg](https://github.com/brianc/node-postgres) for PostgreSQL, [mysql2](https://github.com/sidorares/node-mysql2) for MySQL or MariaDB or [tedious](https://github.com/tediousjs/tedious) for MSSQL.
 
 ## Options
 
