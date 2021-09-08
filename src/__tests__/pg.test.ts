@@ -7,8 +7,8 @@
 
 import { config } from 'dotenv';
 
-import logTestSuite from './suite/log';
-import queryTestSuite from './suite/query';
+import logTestSuite from '../suite/log';
+import queryTestSuite from '../suite/query';
 import SQLTransport from '../winston-sql-transport';
 
 config();
