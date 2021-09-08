@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "declaration": true,
+    "outDir": "./lib",
+    "strict": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "esModuleInterop": true,
+    "types": ["jest", "node"]
+  },
+  "include": ["./src/"],
+  "exclude": ["node_modules", "**/__tests__/*"]
+}

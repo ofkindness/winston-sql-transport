@@ -4,12 +4,31 @@
  * @license MIT
  * @author Andrei Tretyakov <andrei.tretyakov@gmail.com>
  */
-const knex = require('knex');
-const moment = require('moment');
-const Transport = require('winston-transport');
-const { callbackify } = require('util');
+import { knex } from 'knex';
+import moment = require('moment');
+import Transport = require('winston-transport');
+import { callbackify } from 'util';
 
-const { handleCallback } = require('./helpers');
+import { handleCallback } from './helpers';
+
+interface SQLTransport {
+  client: any;
+  connection: string;
+  label: string;
+  level: string;
+  defaultMeta: any;
+  name: string;
+  silent: boolean;
+  tableName: string;
+}
+
+interface QueryOptions {
+  from: string;
+  until: string;
+  rows: number;
+  order: string;
+  fields: string[];
+}
 
 class SQLTransport extends Transport {
   /**
@@ -28,7 +47,7 @@ class SQLTransport extends Transport {
    * @param {string} [options.tableName=winston_logs] - The name of the table you
    * want to store log messages in.
    */
-  constructor(options = {}) {
+  constructor(options: any) {
     super();
 
     const {
@@ -43,38 +62,37 @@ class SQLTransport extends Transport {
     } = options;
 
     if (!client) {
-      throw new Error('You have to define client');
+      throw new Error('You have to define knex client');
     }
 
-    Object.assign(this, {
-      client: knex({
-        client,
-        connection,
-      }),
-      label,
-      level,
-      meta,
-      name,
-      silent,
-      tableName,
+    this.client = knex({
+      client,
+      connection,
     });
+
+    this.label = label;
+    this.level = level;
+    this.defaultMeta = this.defaultMeta;
+    this.name = name;
+    this.silent = silent;
+    this.tableName = tableName;
   }
 
   /**
    * Create logs table.
    * @return {Promise} result of creation within a Promise
    */
-  init() {
-    const { client, tableName } = this;
+  init(): Promise<any> {
+    const { client: any, tableName: string } = this as any;
 
-    return client.schema.hasTable(tableName).then((exists) => {
+    return this.client.schema.hasTable(this.tableName).then((exists: any) => {
       if (!exists) {
-        return client.schema.createTable(tableName, (table) => {
+        return this.client.schema.createTable(this.tableName, (table: any) => {
           table.increments();
           table.string('level');
           table.string('message');
           table.string('meta');
-          table.timestamp('timestamp').defaultTo(client.fn.now());
+          table.timestamp('timestamp').defaultTo(this.client.fn.now());
         });
       }
       return exists;
@@ -86,7 +104,7 @@ class SQLTransport extends Transport {
    * Return a Promise which resolves when all queries are finished and the underlying connections are closed.
    * @return {Promise} result within a Promise
    */
-  end() {
+  end(): Promise<any> {
     return this.client.destroy();
   }
 
@@ -95,9 +113,8 @@ class SQLTransport extends Transport {
    * Return a Promise which resolves when all logs are finished.
    * @return {Promise} result within a Promise
    */
-  flush() {
-    const { client, tableName } = this;
-    return client.from(tableName).del();
+  flush(): Promise<any> {
+    return this.client.from(this.tableName).del();
   }
 
   /**
@@ -107,7 +124,7 @@ class SQLTransport extends Transport {
    * @param {string} [info.message] - Message to log
    * @param {Function} callback - Continuation to respond to when complete.
    */
-  log(info, callback) {
+  log(info: any, callback: Function) {
     setImmediate(() => {
       this.emit('logged', info);
     });
@@ -123,11 +140,15 @@ class SQLTransport extends Transport {
         timestamp: moment().utc().toDate(),
       };
 
-      const logQuery = async () => {
-        await client.insert(log).into(tableName);
+      const logQuery = async (cb: Function) => {
+        try {
+          await client.insert(log).into(tableName);
+        } catch (error) {
+          cb(error);
+        }
       };
 
-      logQuery((error) => {
+      logQuery((error: Error) => {
         if (error) {
           return handleCallback(callback, error);
         }
@@ -147,7 +168,7 @@ class SQLTransport extends Transport {
    * @param {string[]} [options.fields=[]]
    * @param {Function} callback - Continuation to respond to when complete.
    */
-  query(options = {}, callback) {
+  query(options: QueryOptions, callback: Function) {
     const { fields = [] } = options;
 
     let query = this.client.select(fields).from(this.tableName);
@@ -169,7 +190,8 @@ class SQLTransport extends Transport {
 
     const queryQuery = callbackify(() => query);
 
-    queryQuery((error, data) => {
+    // @ts-ignore
+    queryQuery((error: Error, data: any) => {
       if (error) {
         return handleCallback(callback, error);
       }
@@ -178,4 +200,4 @@ class SQLTransport extends Transport {
   }
 }
 
-module.exports = SQLTransport;
+export default SQLTransport;

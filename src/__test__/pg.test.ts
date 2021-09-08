@@ -5,11 +5,11 @@
  * @author Andrei Tretyakov <andrei.tretyakov@gmail.com>
  */
 
-const { config } = require('dotenv');
+import { config } from 'dotenv';
 
-const logTestSuite = require('./suite/log');
-const queryTestSuite = require('./suite/query');
-const SQLTransport = require('../winston-sql-transport');
+import logTestSuite from './suite/log';
+import queryTestSuite from './suite/query';
+import SQLTransport from '../winston-sql-transport';
 
 config();
 
