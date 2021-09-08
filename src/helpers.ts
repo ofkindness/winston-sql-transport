@@ -4,10 +4,11 @@
  * @license MIT
  * @author Andrei Tretyakov <andrei.tretyakov@gmail.com>
  */
-const handleCallback = (callback, ...args) => {
+export const handleCallback = (
+  callback: (...args: any) => void,
+  ...args: any
+) => {
   if (callback && typeof callback === 'function') {
     callback(...args);
   }
 };
-
-module.exports = { handleCallback };

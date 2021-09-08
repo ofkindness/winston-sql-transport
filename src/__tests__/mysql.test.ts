@@ -4,11 +4,11 @@
  * @license MIT
  * @author Andrei Tretyakov <andrei.tretyakov@gmail.com>
  */
-const { config } = require('dotenv');
+import { config } from 'dotenv';
 
-const logTestSuite = require('./suite/log');
-const queryTestSuite = require('./suite/query');
-const SQLTransport = require('../winston-sql-transport');
+import logTestSuite from '../suite/log';
+import queryTestSuite from '../suite/query';
+import SQLTransport from '../winston-sql-transport';
 
 config();
 
@@ -20,10 +20,6 @@ const transportConfig = {
     user: process.env.MYSQL_USER,
     password: process.env.MYSQL_PASSWORD,
     database: process.env.MYSQL_DATABASE,
-  },
-  pool: {
-    min: 0,
-    max: 10,
   },
   tableName: 'winston_logs',
 };
