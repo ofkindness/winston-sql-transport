@@ -20,10 +20,6 @@ const transportConfig = {
 @${process.env.PGHOST}\
 :${process.env.PGPORT}\
 /${process.env.PGDATABASE}`,
-  pool: {
-    min: 0,
-    max: 10,
-  },
   tableName: 'winston_logs',
 };
 

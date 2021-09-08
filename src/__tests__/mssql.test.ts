@@ -20,10 +20,6 @@ const transportConfig = {
     server: process.env.MSSQL_HOST,
     database: process.env.MSSQL_DB,
   },
-  pool: {
-    min: 0,
-    max: 10,
-  },
   tableName: 'winston_logs',
 };
 

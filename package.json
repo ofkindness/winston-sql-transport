@@ -15,7 +15,6 @@
   },
   "dependencies": {
     "knex": "^0.95.11",
-    "logform": "^2.2.0",
     "moment": "^2.29.1",
     "winston-transport": "^4.4.0"
   },

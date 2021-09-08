@@ -21,10 +21,6 @@ const transportConfig = {
     password: process.env.MYSQL_PASSWORD,
     database: process.env.MYSQL_DATABASE,
   },
-  pool: {
-    min: 0,
-    max: 10,
-  },
   tableName: 'winston_logs',
 };
 

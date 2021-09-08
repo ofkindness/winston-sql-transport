@@ -5,40 +5,39 @@
  * @author Andrei Tretyakov <andrei.tretyakov@gmail.com>
  */
 import { knex } from 'knex';
-import moment = require('moment');
-import Transport = require('winston-transport');
+import moment from 'moment';
+import Transport from 'winston-transport';
 import { callbackify } from 'util';
 
 import { handleCallback } from './helpers';
 
 interface SQLTransportOptions {
-  client: any;
+  client: string;
   connection: any;
+  defaultMeta?: any;
   label?: string;
   level?: string;
-  defaultMeta?: any;
   name?: string;
   silent?: boolean;
-  tableName: string;
+  tableName?: string;
 }
 
-interface SQLTransport {
+interface SQLTransport extends SQLTransportOptions {
   client: any;
-  connection: any;
-  label?: string;
-  level?: string;
-  defaultMeta?: any;
-  name?: string;
-  silent?: boolean;
+  defaultMeta: any;
+  label: string;
+  level: string;
+  name: string;
+  silent: boolean;
   tableName: string;
 }
 
 interface QueryOptions {
-  from: string;
-  until: string;
-  rows: number;
-  order: string;
   fields: string[];
+  from: Date | string;
+  order: string;
+  rows: number;
+  until: Date | string;
 }
 
 class SQLTransport extends Transport {
@@ -47,7 +46,7 @@ class SQLTransport extends Transport {
    * @constructor
    * @param {Object} options
    * @param {string} options.client - Database client
-   * @param {string} options.connectionString - Database connection uri
+   * @param {string} options.connection - Database connection uri | object
    * @param {string} [options.label] - Label stored with entry object if defined.
    * @param {string} [options.level=info] - Level of messages that this transport
    * should log.
@@ -64,9 +63,9 @@ class SQLTransport extends Transport {
     const {
       client,
       connection = {},
+      defaultMeta = {},
       label = '',
       level = 'info',
-      defaultMeta = {},
       name = 'SQLTransport',
       silent = false,
       tableName = 'winston_logs',
@@ -81,9 +80,9 @@ class SQLTransport extends Transport {
       connection,
     });
 
+    this.defaultMeta = defaultMeta;
     this.label = label;
     this.level = level;
-    this.defaultMeta = defaultMeta;
     this.name = name;
     this.silent = silent;
     this.tableName = tableName;
@@ -197,9 +196,8 @@ class SQLTransport extends Transport {
       query = query.orderBy('timestamp', options.order);
     }
 
-    const queryQuery = callbackify(() => query);
+    const queryQuery = callbackify<any>(() => query);
 
-    // @ts-ignore
     queryQuery((error: unknown, data: any) => {
       if (error) {
         return handleCallback(callback, error);
