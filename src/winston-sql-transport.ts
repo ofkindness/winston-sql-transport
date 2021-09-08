@@ -11,14 +11,25 @@ import { callbackify } from 'util';
 
 import { handleCallback } from './helpers';
 
+interface SQLTransportOptions {
+  client: any;
+  connection: any;
+  label?: string;
+  level?: string;
+  defaultMeta?: any;
+  name?: string;
+  silent?: boolean;
+  tableName: string;
+}
+
 interface SQLTransport {
   client: any;
-  connection: string;
-  label: string;
-  level: string;
-  defaultMeta: any;
-  name: string;
-  silent: boolean;
+  connection: any;
+  label?: string;
+  level?: string;
+  defaultMeta?: any;
+  name?: string;
+  silent?: boolean;
   tableName: string;
 }
 
@@ -47,7 +58,7 @@ class SQLTransport extends Transport {
    * @param {string} [options.tableName=winston_logs] - The name of the table you
    * want to store log messages in.
    */
-  constructor(options: any) {
+  constructor(options: SQLTransportOptions) {
     super();
 
     const {
@@ -55,7 +66,7 @@ class SQLTransport extends Transport {
       connection = {},
       label = '',
       level = 'info',
-      meta = {},
+      defaultMeta = {},
       name = 'SQLTransport',
       silent = false,
       tableName = 'winston_logs',
@@ -72,7 +83,7 @@ class SQLTransport extends Transport {
 
     this.label = label;
     this.level = level;
-    this.defaultMeta = this.defaultMeta;
+    this.defaultMeta = defaultMeta;
     this.name = name;
     this.silent = silent;
     this.tableName = tableName;
@@ -83,8 +94,6 @@ class SQLTransport extends Transport {
    * @return {Promise} result of creation within a Promise
    */
   init(): Promise<any> {
-    const { client: any, tableName: string } = this as any;
-
     return this.client.schema.hasTable(this.tableName).then((exists: any) => {
       if (!exists) {
         return this.client.schema.createTable(this.tableName, (table: any) => {
@@ -124,7 +133,7 @@ class SQLTransport extends Transport {
    * @param {string} [info.message] - Message to log
    * @param {Function} callback - Continuation to respond to when complete.
    */
-  log(info: any, callback: Function) {
+  log(info: any, callback: (e: unknown, data: any) => void) {
     setImmediate(() => {
       this.emit('logged', info);
     });
@@ -140,7 +149,7 @@ class SQLTransport extends Transport {
         timestamp: moment().utc().toDate(),
       };
 
-      const logQuery = async (cb: Function) => {
+      const logQuery = async (cb: (e: unknown) => void) => {
         try {
           await client.insert(log).into(tableName);
         } catch (error) {
@@ -148,7 +157,7 @@ class SQLTransport extends Transport {
         }
       };
 
-      logQuery((error: Error) => {
+      logQuery((error: unknown) => {
         if (error) {
           return handleCallback(callback, error);
         }
@@ -168,7 +177,7 @@ class SQLTransport extends Transport {
    * @param {string[]} [options.fields=[]]
    * @param {Function} callback - Continuation to respond to when complete.
    */
-  query(options: QueryOptions, callback: Function) {
+  query(options: QueryOptions, callback: (e: unknown, data: any) => void) {
     const { fields = [] } = options;
 
     let query = this.client.select(fields).from(this.tableName);
@@ -191,7 +200,7 @@ class SQLTransport extends Transport {
     const queryQuery = callbackify(() => query);
 
     // @ts-ignore
-    queryQuery((error: Error, data: any) => {
+    queryQuery((error: unknown, data: any) => {
       if (error) {
         return handleCallback(callback, error);
       }
