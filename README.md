@@ -29,34 +29,26 @@ and then install the appropriate database library: [mysql2](https://github.com/s
 ```js
 // CommonJS
 const winston = require('winston');
-const { SQLTransport } = require('winston-sql-transport');
+const { SqlTransport } = require('winston-sql-transport');
 
 // ES Modules
 import winston from 'winston';
-import { SQLTransport } from 'winston-sql-transport';
+import { SqlTransport } from 'winston-sql-transport';
 ```
 
-## Options
+## Transport Options
 
-See the default values used:
-
-```js
-const options = {
-  level = 'info',
-  name = 'SQLTransport',
-  silent = false,
-  tableName: 'winston_logs',
-};
-```
-
-Other options (optional):
+### See the default values used:
 
 ```
-  defaultMeta: will be added by default to all logs;
-  label: stored with entry object if defined;
+  `level` = 'info', Level at which to log the message.
+  `name` = 'SqlTransport', Name for transport
+  `silent` = false, Suppress logs.
+  `tableName` = 'winston_logs', Name for database table
+  `defaultMeta` (optional), Will be added by default to meta for all logs;
 ```
 
-## Configure transport with the chosen client:
+## Configure transport with the chosen client
 
 ```js
 const const transportConfig = {
@@ -90,28 +82,49 @@ const transportConfig = {
 };
 ```
 
+## Example
+
+```js
+const transportConfig = {
+  client: 'mssql',
+  connection: {
+    user: MSSQL_USER,
+    password: MSSQL_PASSWORD,
+    server: MSSQL_HOST,
+    database: MSSQL_DB,
+  },
+  defaultMeta: { example_winston_logs: true },
+  name: 'ExampleSqlTransport',
+  tableName: 'winston_logs',
+};
+```
+
 ## Usage
 
 ```js
 const logger = winston.createLogger({
-  level: 'info',
   format: winston.format.json(),
-  transports: [new SQLTransport(transportConfig)],
+  transports: [new SqlTransport(transportConfig)],
 });
-```
 
-## Logging
-
-```js
 logger.log({
   level: 'info',
   message: 'Hello there.',
 });
 ```
 
+### If you need to create table with a transport:
+
+```js
+(async () => {
+  const transport = new SqlTransport(transportConfig);
+  await transport.init();
+})();
+```
+
 ## Querying Logs
 
-This transport supports querying of logs with Loggly-like options. [See Loggly Search API](https://www.loggly.com/docs/api-retrieving-data/)
+This transport supports querying of logs with Loggly-like options.
 
 ```js
 const options = {
