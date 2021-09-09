@@ -22,7 +22,19 @@ via [knex](https://knexjs.org/) library.
   $ npm install winston-sql-transport
 ```
 
-and then install the appropriate database library: [pg](https://github.com/brianc/node-postgres) for PostgreSQL, [mysql2](https://github.com/sidorares/node-mysql2) for MySQL or MariaDB or [tedious](https://github.com/tediousjs/tedious) for MSSQL.
+and then install the appropriate database library: [mysql2](https://github.com/sidorares/node-mysql2) for MySQL or MariaDB, [pg](https://github.com/brianc/node-postgres) for PostgreSQL, or [tedious](https://github.com/tediousjs/tedious) for MSSQL.
+
+## Add
+
+```js
+// CommonJS
+const winston = require('winston');
+const { SQLTransport } = require('winston-sql-transport');
+
+// ES Modules
+import winston from 'winston';
+import { SQLTransport } from 'winston-sql-transport';
+```
 
 ## Options
 
@@ -30,27 +42,62 @@ See the default values used:
 
 ```js
 const options = {
+  level = 'info',
+  name = 'SQLTransport',
+  silent = false,
   tableName: 'winston_logs',
+};
+```
+
+Other options (optional):
+
+```
+  defaultMeta: will be added by default to all logs;
+  label: stored with entry object if defined;
+```
+
+## Configure transport with the chosen client:
+
+```js
+const const transportConfig = {
+  client: 'mssql',
+  connection: {
+    user: MSSQL_USER,
+    password: MSSQL_PASSWORD,
+    server: MSSQL_HOST,
+    database: MSSQL_DB,
+  },
+}
+
+const transportConfig = {
+  client: 'mysql2',
+  connection: {
+    host: MYSQL_HOST,
+    port: MYSQL_PORT,
+    user: MYSQL_USER,
+    password: MYSQL_PASSWORD,
+    database: MYSQL_DATABASE,
+  },
+};
+
+const transportConfig = {
+  client: 'pg',
+  connection: `postgres://${PGUSER}\
+:${PGPASSWORD}\
+@${PGHOST}\
+:${PGPORT}\
+/${PGDATABASE}`,
 };
 ```
 
 ## Usage
 
 ```js
-const winston = require('winston');
-const SQLTransport = require('winston-sql-transport');
-
 const logger = winston.createLogger({
   level: 'info',
   format: winston.format.json(),
-  transports: [
-    new SQLTransport({
-      tableName: 'winston_logs',
-    }),
-  ],
+  transports: [new SQLTransport(transportConfig)],
 });
-
-module.exports = logger;
 ```
 
 ## Logging

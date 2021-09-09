@@ -8,19 +8,18 @@ import { config } from 'dotenv';
 
 import logTestSuite from '../suite/log';
 import queryTestSuite from '../suite/query';
-import SQLTransport from '../winston-sql-transport';
+import { SQLTransport } from '../winston-sql-transport';
 
 config();
 
 const transportConfig = {
-  client: 'mssql',
+  client: <const>'mssql',
   connection: {
     user: process.env.MSSQL_USER,
     password: process.env.MSSQL_PASSWORD,
     server: process.env.MSSQL_HOST,
     database: process.env.MSSQL_DB,
   },
-  tableName: 'winston_logs',
 };
 
 describe('MSSQL', () => {
