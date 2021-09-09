@@ -24,18 +24,6 @@ via [knex](https://knexjs.org/) library.
 
 and then install the appropriate database library: [pg](https://github.com/brianc/node-postgres) for PostgreSQL, [mysql2](https://github.com/sidorares/node-mysql2) for MySQL or MariaDB or [tedious](https://github.com/tediousjs/tedious) for MSSQL.
 
-## Options
-
-See the default values used:
-
-```js
-const options = {
-  level = 'info',
-  name = 'SQLTransport',
-  tableName: 'winston_logs',
-};
-```
-
 ## Add
 
 ```js
@@ -48,7 +36,27 @@ import winston from 'winston';
 import { SQLTransport } from 'winston-sql-transport';
 ```
 
-## Configure transport
+## Options
+
+See the default values used:
+
+```js
+const options = {
+  level = 'info',
+  name = 'SQLTransport',
+  silent = false,
+  tableName: 'winston_logs',
+};
+```
+
+Other options (optional):
+
+```
+  defaultMeta: will be added by default to all logs;
+  label: stored with entry object if defined;
+```
+
+## Configure transport with the chosen client:
 
 ```js
 const const transportConfig = {
