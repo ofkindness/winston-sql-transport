@@ -52,8 +52,8 @@ const options = {
 ### Other options (optional):
 
 ```
-  `defaultMeta`: will be added by default to all logs;
-  `label`: stored with entry object if defined;
+  defaultMeta: will be added by default to all logs;
+  label: stored with entry object if defined;
 ```
 
 ## Configure transport with the chosen client
