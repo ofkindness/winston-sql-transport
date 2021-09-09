@@ -42,12 +42,13 @@ const options = {
 // CommonJS
 const winston = require('winston');
 const { SQLTransport } = require('winston-sql-transport');
+
 // ES modules
 import winston from 'winston';
 import { SQLTransport } from 'winston-sql-transport';
 ```
 
-## Usage
+## Configure transport
 
 ```js
 const const transportConfig = {
@@ -61,6 +62,17 @@ const const transportConfig = {
 }
 
 const transportConfig = {
+  client: 'mysql2',
+  connection: {
+    host: MYSQL_HOST,
+    port: MYSQL_PORT,
+    user: MYSQL_USER,
+    password: MYSQL_PASSWORD,
+    database: MYSQL_DATABASE,
+  },
+};
+
+const transportConfig = {
   client: 'pg',
   connection: `postgres://${PGUSER}\
 :${PGPASSWORD}\
@@ -68,16 +80,16 @@ const transportConfig = {
 :${PGPORT}\
 /${PGDATABASE}`,
 };
+```
 
+## Usage
+
+```js
 const logger = winston.createLogger({
   level: 'info',
   format: winston.format.json(),
-  transports: [
-    new SQLTransport(transportConfig),
-  ],
+  transports: [new SQLTransport(transportConfig)],
 });
-
-module.exports = logger;
 ```
 
 ## Logging
