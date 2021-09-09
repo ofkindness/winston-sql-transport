@@ -17,7 +17,7 @@ export enum ClientType {
   'pg',
 }
 
-export interface SQLTransportOptions {
+export interface SqlTransportOptions {
   client: keyof typeof ClientType;
   connection: any;
   defaultMeta?: any;
@@ -28,7 +28,7 @@ export interface SQLTransportOptions {
   tableName?: string;
 }
 
-export interface SQLTransport extends SQLTransportOptions {
+export interface SqlTransport extends SqlTransportOptions {
   client: any;
   defaultMeta: any;
   label: string;
@@ -46,7 +46,7 @@ export interface QueryOptions {
   until: Date | string;
 }
 
-export class SQLTransport extends Transport {
+export class SqlTransport extends Transport {
   /**
    * Constructor for the universal transport object.
    * @constructor
@@ -63,7 +63,7 @@ export class SQLTransport extends Transport {
    * @param {string} [options.tableName=winston_logs] - The name of the table you
    * want to store log messages in.
    */
-  constructor(options: SQLTransportOptions) {
+  constructor(options: SqlTransportOptions) {
     super();
 
     const {
@@ -72,7 +72,7 @@ export class SQLTransport extends Transport {
       defaultMeta = {},
       label = '',
       level = 'info',
-      name = 'SQLTransport',
+      name = 'SqlTransport',
       silent = false,
       tableName = 'winston_logs',
     } = options;

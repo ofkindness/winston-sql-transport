@@ -29,11 +29,11 @@ and then install the appropriate database library: [mysql2](https://github.com/s
 ```js
 // CommonJS
 const winston = require('winston');
-const { SQLTransport } = require('winston-sql-transport');
+const { SqlTransport } = require('winston-sql-transport');
 
 // ES Modules
 import winston from 'winston';
-import { SQLTransport } from 'winston-sql-transport';
+import { SqlTransport } from 'winston-sql-transport';
 ```
 
 ## Transport Options
@@ -42,7 +42,7 @@ import { SQLTransport } from 'winston-sql-transport';
 
 ```
   `level` = 'info', Level at which to log the message.
-  `name` = 'SQLTransport', Name for transport
+  `name` = 'SqlTransport', Name for transport
   `silent` = false, Suppress logs.
   `tableName` = 'winston_logs', Name for database table
   `defaultMeta` (optional), Will be added by default to meta for all logs;
@@ -94,7 +94,7 @@ const transportConfig = {
     database: MSSQL_DB,
   },
   defaultMeta: { example_winston_logs: true },
-  name: 'ExampleSQLTransport',
+  name: 'ExampleSqlTransport',
   tableName: 'winston_logs',
 };
 ```
@@ -104,7 +104,7 @@ const transportConfig = {
 ```js
 const logger = winston.createLogger({
   format: winston.format.json(),
-  transports: [new SQLTransport(transportConfig)],
+  transports: [new SqlTransport(transportConfig)],
 });
 
 logger.log({
@@ -117,14 +117,14 @@ logger.log({
 
 ```js
 (async () => {
-  const transport = new SQLTransport(transportConfig);
+  const transport = new SqlTransport(transportConfig);
   await transport.init();
 })();
 ```
 
 ## Querying Logs
 
-This transport supports querying of logs with Loggly-like options. [See Loggly Search API](https://www.loggly.com/docs/api-retrieving-data/)
+This transport supports querying of logs with Loggly-like options.
 
 ```js
 const options = {

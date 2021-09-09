@@ -8,7 +8,7 @@ import { config } from 'dotenv';
 
 import logTestSuite from '../suite/log';
 import queryTestSuite from '../suite/query';
-import { SQLTransport } from '../winston-sql-transport';
+import { SqlTransport } from '../winston-sql-transport';
 
 config();
 
@@ -24,7 +24,7 @@ const transportConfig = {
 };
 
 describe('MySQL', () => {
-  const transport = new SQLTransport(transportConfig);
+  const transport = new SqlTransport(transportConfig);
 
   beforeAll(() => transport.init());
 
