@@ -30,23 +30,50 @@ See the default values used:
 
 ```js
 const options = {
+  level = 'info',
+  name = 'SQLTransport',
   tableName: 'winston_logs',
 };
+```
+
+## Add
+
+```js
+// CommonJS
+const winston = require('winston');
+const { SQLTransport } = require('winston-sql-transport');
+// ES modules
+import winston from 'winston';
+import { SQLTransport } from 'winston-sql-transport';
 ```
 
 ## Usage
 
 ```js
-const winston = require('winston');
-const SQLTransport = require('winston-sql-transport');
+const const transportConfig = {
+  client: 'mssql',
+  connection: {
+    user: MSSQL_USER,
+    password: MSSQL_PASSWORD,
+    server: MSSQL_HOST,
+    database: MSSQL_DB,
+  },
+}
+
+const transportConfig = {
+  client: 'pg',
+  connection: `postgres://${PGUSER}\
+:${PGPASSWORD}\
+@${PGHOST}\
+:${PGPORT}\
+/${PGDATABASE}`,
+};
 
 const logger = winston.createLogger({
   level: 'info',
   format: winston.format.json(),
   transports: [
-    new SQLTransport({
-      tableName: 'winston_logs',
-    }),
+    new SQLTransport(transportConfig),
   ],
 });
 

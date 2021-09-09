@@ -8,12 +8,12 @@ import { config } from 'dotenv';
 
 import logTestSuite from '../suite/log';
 import queryTestSuite from '../suite/query';
-import SQLTransport from '../winston-sql-transport';
+import { SQLTransport } from '../winston-sql-transport';
 
 config();
 
 const transportConfig = {
-  client: 'mysql2',
+  client: <const>'mysql2',
   connection: {
     host: process.env.MYSQL_HOST,
     port: process.env.MYSQL_PORT,
@@ -21,7 +21,6 @@ const transportConfig = {
     password: process.env.MYSQL_PASSWORD,
     database: process.env.MYSQL_DATABASE,
   },
-  tableName: 'winston_logs',
 };
 
 describe('MySQL', () => {

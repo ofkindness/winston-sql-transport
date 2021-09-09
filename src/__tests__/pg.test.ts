@@ -9,18 +9,17 @@ import { config } from 'dotenv';
 
 import logTestSuite from '../suite/log';
 import queryTestSuite from '../suite/query';
-import SQLTransport from '../winston-sql-transport';
+import { SQLTransport, ClientType } from '../winston-sql-transport';
 
 config();
 
 const transportConfig = {
-  client: 'pg',
+  client: <const>'pg',
   connection: `postgres://${process.env.PGUSER}\
 :${process.env.PGPASSWORD}\
 @${process.env.PGHOST}\
 :${process.env.PGPORT}\
 /${process.env.PGDATABASE}`,
-  tableName: 'winston_logs',
 };
 
 describe('Postgres', () => {

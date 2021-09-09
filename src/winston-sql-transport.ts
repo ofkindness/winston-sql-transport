@@ -11,8 +11,14 @@ import { callbackify } from 'util';
 
 import { handleCallback } from './helpers';
 
-interface SQLTransportOptions {
-  client: string;
+export enum ClientType {
+  'mssql',
+  'mysql2',
+  'pg',
+}
+
+export interface SQLTransportOptions {
+  client: keyof typeof ClientType;
   connection: any;
   defaultMeta?: any;
   label?: string;
@@ -22,7 +28,7 @@ interface SQLTransportOptions {
   tableName?: string;
 }
 
-interface SQLTransport extends SQLTransportOptions {
+export interface SQLTransport extends SQLTransportOptions {
   client: any;
   defaultMeta: any;
   label: string;
@@ -32,7 +38,7 @@ interface SQLTransport extends SQLTransportOptions {
   tableName: string;
 }
 
-interface QueryOptions {
+export interface QueryOptions {
   fields: string[];
   from: Date | string;
   order: string;
@@ -40,7 +46,7 @@ interface QueryOptions {
   until: Date | string;
 }
 
-class SQLTransport extends Transport {
+export class SQLTransport extends Transport {
   /**
    * Constructor for the universal transport object.
    * @constructor
@@ -93,18 +99,23 @@ class SQLTransport extends Transport {
    * @return {Promise} result of creation within a Promise
    */
   init(): Promise<any> {
-    return this.client.schema.hasTable(this.tableName).then((exists: any) => {
-      if (!exists) {
-        return this.client.schema.createTable(this.tableName, (table: any) => {
-          table.increments();
-          table.string('level');
-          table.string('message');
-          table.string('meta');
-          table.timestamp('timestamp').defaultTo(this.client.fn.now());
-        });
-      }
-      return exists;
-    });
+    return this.client.schema
+      .hasTable(this.tableName)
+      .then((exists: boolean) => {
+        if (!exists) {
+          return this.client.schema.createTable(
+            this.tableName,
+            (table: any) => {
+              table.increments();
+              table.string('level');
+              table.string('message');
+              table.string('meta');
+              table.timestamp('timestamp').defaultTo(this.client.fn.now());
+            }
+          );
+        }
+        return exists;
+      });
   }
 
   /**
@@ -206,5 +217,3 @@ class SQLTransport extends Transport {
     });
   }
 }
-
-export default SQLTransport;
