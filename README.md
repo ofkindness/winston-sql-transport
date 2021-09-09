@@ -38,7 +38,7 @@ import { SQLTransport } from 'winston-sql-transport';
 
 ## Options
 
-See the default values used:
+### See the default values used:
 
 ```js
 const options = {
@@ -49,14 +49,14 @@ const options = {
 };
 ```
 
-Other options (optional):
+### Other options (optional):
 
 ```
-  defaultMeta: will be added by default to all logs;
-  label: stored with entry object if defined;
+  `defaultMeta`: will be added by default to all logs;
+  `label`: stored with entry object if defined;
 ```
 
-## Configure transport with the chosen client:
+## Configure transport with the chosen client
 
 ```js
 const const transportConfig = {
@@ -98,11 +98,7 @@ const logger = winston.createLogger({
   format: winston.format.json(),
   transports: [new SQLTransport(transportConfig)],
 });
-```
 
-## Logging
-
-```js
 logger.log({
   level: 'info',
   message: 'Hello there.',
