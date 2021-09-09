@@ -39,11 +39,11 @@ export interface SqlTransport extends SqlTransportOptions {
 }
 
 export interface QueryOptions {
-  fields: string[];
-  from: Date | string;
-  order: string;
-  rows: number;
-  until: Date | string;
+  fields?: string[];
+  from?: Date | string;
+  order?: string;
+  rows?: number;
+  until?: Date | string;
 }
 
 export class SqlTransport extends Transport {
